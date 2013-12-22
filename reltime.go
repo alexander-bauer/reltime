@@ -20,6 +20,8 @@ func (rt RelTime) FormatRelative(format string, t time.Time) string {
 	// Try to pin it down to a "Today", "Tomorrow", or "Yesterday".
 	if output = rt.RelativeDay(t); output != "" {
 		return output
+	} else if output = rt.RelativeWeekday(t); output != "" {
+		return output
 	} else {
 		return t.Format(format)
 	}
@@ -37,6 +39,23 @@ func (rt RelTime) RelativeDay(t time.Time) string {
 		return "Tomorrow"
 	case rt.Yesterday(t):
 		return "Yesterday"
+	default:
+		return ""
+	}
+}
+
+// RelativeWeekday stringifies the given time to a weekday name
+// relative to the RelTime. For example, it might stringify to
+// "Monday" or "Last Wednesday". If it is not possible to stringify to
+// a specific relative weekday, it will return a blank string.
+func (rt RelTime) RelativeWeekday(t time.Time) string {
+	switch {
+	case rt.ThisWeek(t):
+		return t.Weekday().String()
+	case rt.NextWeek(t):
+		return "Next " + t.Weekday().String()
+	case rt.LastWeek(t):
+		return "Last " + t.Weekday().String()
 	default:
 		return ""
 	}

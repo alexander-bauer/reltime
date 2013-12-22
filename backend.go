@@ -40,3 +40,25 @@ func (rt RelTime) Yesterday(t time.Time) bool {
 	beginning := now.New(time.Time(rt)).BeginningOfDay()
 	return Between(t, beginning.AddDate(0, 0, -1), beginning)
 }
+
+// ThisWeek returns whether the given time is within the 7-day period
+// beginning at the start of today and ending 24 * 7 hours later.
+func (rt RelTime) ThisWeek(t time.Time) bool {
+	beginning := now.New(time.Time(rt)).BeginningOfDay()
+	return Between(t, beginning, beginning.AddDate(0, 0, 7))
+}
+
+// NextWeek returns whether the given time is within the 7-day period
+// beginning at the start of today + 24 * 7 hours, and ending 24 * 7
+// hours later.
+func (rt RelTime) NextWeek(t time.Time) bool {
+	beginning := now.New(time.Time(rt)).BeginningOfDay().AddDate(0, 0, 7)
+	return Between(t, beginning, beginning.AddDate(0, 0, 7))
+}
+
+// LastWeek returns whether the given time is within the 7-day period
+// ending at the start of today and beginning 24 * 7 hours earlier.
+func (rt RelTime) LastWeek(t time.Time) bool {
+	end := now.New(time.Time(rt)).BeginningOfDay()
+	return Between(t, end.AddDate(0, 0, -7), end)
+}

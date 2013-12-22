@@ -15,6 +15,10 @@ func TestFormatRelative(t *testing.T) {
 		time.UTC)) != "Today" {
 		t.Errorf("RelativeDay")
 	}
+	if rt.FormatRelative(format, time.Date(2013, 12, 31, 0, 0, 0, 0,
+		time.UTC)) != "Next Tuesday" {
+		t.Errorf("RelativeWeekday")
+	}
 }
 
 func TestRelativeDay(t *testing.T) {
@@ -33,5 +37,23 @@ func TestRelativeDay(t *testing.T) {
 		"Yesterday" {
 		t.Logf(rt.RelativeDay(time.Date(2013, 12, 20, 0, 0, 0, 0, time.UTC)))
 		t.Errorf("Yesterday")
+	}
+}
+
+func TestRelativeWeekday(t *testing.T) {
+	// rt will be the reference time.
+	rt := RelTime(time.Date(2013, 12, 21, 11, 12, 13, 123456789, time.UTC))
+
+	if rt.RelativeWeekday(time.Date(2013, 12, 23, 0, 0, 0, 0, time.UTC)) !=
+		"Monday" {
+		t.Errorf("This week")
+	}
+	if rt.RelativeWeekday(time.Date(2013, 12, 31, 0, 0, 0, 0, time.UTC)) !=
+		"Next Tuesday" {
+		t.Errorf("Next Week")
+	}
+	if rt.RelativeWeekday(time.Date(2013, 12, 20, 0, 0, 0, 0, time.UTC)) !=
+		"Last Friday" {
+		t.Errorf("Last Week")
 	}
 }
