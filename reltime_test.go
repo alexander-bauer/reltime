@@ -11,11 +11,11 @@ func TestFormatRelative(t *testing.T) {
 	// rt will be the reference time.
 	rt := RelTime(time.Date(2013, 12, 21, 11, 12, 13, 123456789, time.UTC))
 
-	if rt.FormatRelative(format, time.Date(2013, 12, 21, 0, 0, 0, 0,
-		time.UTC)) != "Today" {
+	if rt.FormatRelative("%s at 15:04", format,
+		time.Date(2013, 12, 21, 18, 0, 0, 0, time.UTC)) != "Today at 18:00" {
 		t.Errorf("RelativeDay")
 	}
-	if rt.FormatRelative(format, time.Date(2013, 12, 31, 0, 0, 0, 0,
+	if rt.FormatRelative("%s", format, time.Date(2013, 12, 31, 0, 0, 0, 0,
 		time.UTC)) != "Next Tuesday" {
 		t.Errorf("RelativeWeekday")
 	}
