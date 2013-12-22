@@ -7,6 +7,16 @@ import (
 
 const format = "2006-01-02 15:04:05.999999999"
 
+func TestFormatRelative(t *testing.T) {
+	// rt will be the reference time.
+	rt := RelTime(time.Date(2013, 12, 21, 11, 12, 13, 123456789, time.UTC))
+
+	if rt.FormatRelative(format, time.Date(2013, 12, 21, 0, 0, 0, 0,
+		time.UTC)) != "Today" {
+		t.Errorf("RelativeDay")
+	}
+}
+
 func TestRelativeDay(t *testing.T) {
 	// rt will be the reference time.
 	rt := RelTime(time.Date(2013, 12, 21, 11, 12, 13, 123456789, time.UTC))
